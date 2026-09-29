@@ -1,7 +1,7 @@
 # NWA → MP3 一括変換スクリプト実装計画
 
 作成日: 2026-09-29  
-状態: 計画作成済み／スクリプトは未実装
+状態: CLI・テスト・README実装済み／実サンプル変換は未検証（vgmstream-cli未導入）
 
 ## 1. 目的
 
@@ -15,7 +15,7 @@ AIRなどで使われるVisualArt's／RealLive系の `.nwa` 音声を、Python�
 - サンプルのサイズは17,368,304 bytes。先頭44 bytesのヘッダーには、2 channels、16 bit、44,100 Hz、圧縮レベル `-1` が記録されている。
 - ヘッダーの音声データサイズ17,368,260 bytesは、ファイルサイズから44 bytesを引いた値と一致する。ヘッダーから計算した長さは約98.46秒。
 - このサンプルは非圧縮PCMと判断できる。ただし、ヘッダーの確認のみで、復号・再生・MP3変換はまだ行っていない。
-- `python`、`py`、`ffmpeg`、`ffprobe` のコマンド名は見つかったが、実行できるかとバージョンは実装時に確認する。`vgmstream-cli` はPATH上に見つからなかった。
+- Python 3.14.7（`py -3`）、FFmpeg 8.0.1、`ffprobe` が利用でき、FFmpegの`libmp3lame`エンコーダーを確認済み。`python`コマンド名と`vgmstream-cli`はPATH上にない。vgmstream未導入のため、サンプルの復号と実変換は未検証。
 
 NWAには非圧縮PCMと圧縮データの両方がある。vgmstreamの実装では、AIR／CLANNADのNWA、8／16 bit、1／2 channels、圧縮レベル0〜5に対応しているため、今回の復号バックエンドに採用する。[NWA読み込み実装](https://github.com/vgmstream/vgmstream/blob/master/src/meta/nwa.c)
 
