@@ -32,10 +32,14 @@ try {
     }
     Copy-Item -LiteralPath (Join-Path $repoRoot 'README.md') -Destination $appDirectory -Force
     Copy-Item -LiteralPath (Join-Path $repoRoot 'THIRD_PARTY_NOTICES.md') -Destination $appDirectory -Force
+    Copy-Item -LiteralPath (Join-Path $repoRoot 'LICENSE') -Destination $appDirectory -Force
     $docsDirectory = Join-Path $appDirectory 'docs'
     New-Item -ItemType Directory -Path $docsDirectory -Force | Out-Null
     Copy-Item -LiteralPath (Join-Path $repoRoot 'docs\SETUP.md') -Destination $docsDirectory -Force
     Copy-Item -LiteralPath (Join-Path $repoRoot 'docs\DEVELOPMENT.md') -Destination $docsDirectory -Force
+    $licenseDirectory = Join-Path $appDirectory 'LICENSES'
+    New-Item -ItemType Directory -Path $licenseDirectory -Force | Out-Null
+    Copy-Item -Path (Join-Path $repoRoot 'LICENSES\*') -Destination $licenseDirectory -Force
     Compress-Archive -Path (Join-Path $appDirectory '*') -DestinationPath $archivePath -Force
     Write-Output "Created $archivePath"
 }

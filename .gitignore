@@ -1,10 +1,19 @@
-.AGENTS.md
-PLAN.md
+# Audio inputs and generated outputs are not source-code assets.
 *.nwa
 *.mp3
+*.wav
+*.flac
+mp3/
+wav/
+flac/
+
+# Python and Windows build artifacts.
 __pycache__/
 *.py[cod]
-mp3/
 .venv/
 build/
 dist/
+*.spec.bak
+*.log
+Thumbs.db
+.DS_Store

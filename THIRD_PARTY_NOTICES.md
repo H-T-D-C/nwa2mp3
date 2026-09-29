@@ -1,12 +1,28 @@
-# Third-party software notices
+# Third-Party Software Notices
 
-The app can obtain these separate command-line tools on the user's request. They are stored under the current Windows user's `%LOCALAPPDATA%\Nwa2Mp3\tools\` directory and are not included in the application ZIP.
+The repository's own application code is licensed under the MIT License in `LICENSE`. This notice covers third-party components in the Windows application bundle and tools the application can download separately. The MIT License does not replace any of their terms.
 
-| Tool | Pinned version | Download source | Licence/source information |
+## Included in the Windows application bundle
+
+| Component | Version in current build | License | License text |
 |---|---:|---|---|
-| vgmstream command-line build | r2117 | [Official release](https://github.com/vgmstream/vgmstream/releases/download/r2117/vgmstream-win64.zip) | [vgmstream COPYING](https://github.com/vgmstream/vgmstream/blob/master/COPYING) |
-| FFmpeg essentials | 9.0.2 | [Gyan Windows build](https://www.gyan.dev/ffmpeg/builds/packages/ffmpeg-9.0.2-essentials_build.zip) | [Build details, included libraries and source links](https://www.gyan.dev/ffmpeg/builds/) |
+| Python runtime | 3.14.7 | Python Software Foundation License 2 | [`LICENSES/Python-PSF-2.0.txt`](LICENSES/Python-PSF-2.0.txt) |
+| Tcl/Tk runtime | 9.0 | Tcl/Tk license terms | [`LICENSES/TclTk-license.terms`](LICENSES/TclTk-license.terms) |
+| PyInstaller bootloader and runtime hooks | 6.22.3 | GPL 2.0 or later with the PyInstaller Bootloader Exception; applicable runtime hooks use Apache 2.0 | [`LICENSES/Apache-2.0.txt`](LICENSES/Apache-2.0.txt), [PyInstaller license details](https://pyinstaller.org/en/stable/license.html), [PyInstaller license file](https://github.com/pyinstaller/pyinstaller/blob/v6.22.3/COPYING.txt) |
 
-The app verifies each archive's SHA-256 against the pinned values in `resources/tool_catalog.json` before extracting it. FFmpeg's essentials build includes `libmp3lame`. See the linked project and build pages for the terms that apply to each separate tool.
+PyInstaller's exception permits distributing the application bundle under its own license, subject to the licenses of the bundled dependencies. This repository does not modify PyInstaller.
 
-The Python application uses the Python standard library. The Windows bundle is built with PyInstaller; its build-time dependency and licence notice will be recorded alongside the release build configuration.
+## Optional tools downloaded by the user
+
+These tools are not included in the application ZIP. When a user selects automatic setup, the app fetches the pinned archive from its listed publisher, verifies the SHA-256 from `resources/tool_catalog.json`, and keeps the archive's extracted files, including upstream license files, under that user's `%LOCALAPPDATA%` directory.
+
+| Tool | Pinned version | Publisher and license | Source and terms |
+|---|---:|---|---|
+| vgmstream command-line build | r2117 | vgmstream contributors; permissive license in the project's `COPYING` file | [Pinned Windows archive](https://github.com/vgmstream/vgmstream/releases/download/r2117/vgmstream-win64.zip), [COPYING](https://github.com/vgmstream/vgmstream/blob/master/COPYING) |
+| FFmpeg essentials build | 9.0.2 | Gyan Windows build; GPLv3 build with separately licensed libraries | [Pinned ZIP](https://www.gyan.dev/ffmpeg/builds/packages/ffmpeg-9.0.2-essentials_build.zip), [build details and source links](https://www.gyan.dev/ffmpeg/builds/) |
+
+The vgmstream and FFmpeg binaries and their dependencies remain under their respective upstream licenses. Review the license files in each downloaded package before redistributing that package. The FFmpeg essentials build contains `libmp3lame` for MP3 output.
+
+## Build-only tools
+
+PyInstaller and its Python package dependencies in `requirements-build.txt` are used only to produce the Windows bundle. They are not installed separately for end users. PyInstaller's terms and exception are linked above.

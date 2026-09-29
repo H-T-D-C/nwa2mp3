@@ -10,9 +10,10 @@ a = Analysis(
     datas=[
         (str(root / "resources" / "tool_catalog.json"), "resources"),
         (str(root / "THIRD_PARTY_NOTICES.md"), "."),
+        (str(root / "LICENSE"), "."),
         (str(root / "README.md"), "."),
         (str(root / "docs" / "SETUP.md"), "docs"),
-    ],
+    ] + [(str(path), "LICENSES") for path in (root / "LICENSES").glob("*")],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
