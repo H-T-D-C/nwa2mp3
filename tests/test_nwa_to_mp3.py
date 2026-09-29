@@ -6,7 +6,7 @@ import wave
 from pathlib import Path
 from unittest.mock import patch
 
-import nwa_to_mp3 as app
+import nwa_conversion as app
 
 
 def write_wav(path: Path, frames: int = 100, channels: int = 2, rate: int = 44100) -> None:
@@ -15,6 +15,18 @@ def write_wav(path: Path, frames: int = 100, channels: int = 2, rate: int = 4410
         output.setsampwidth(2)
         output.setframerate(rate)
         output.writeframes(b"\0" * frames * channels * 2)
+
+
+class ToolResolutionTests(unittest.TestCase):
+    def test_managed_ffmpeg_bin_is_found_without_path_or_saved_configuration(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            executable = root / "ffmpeg" / "test1" / "bin" / "ffmpeg.exe"
+            executable.parent.mkdir(parents=True)
+            executable.touch()
+            with patch("app_paths.tools_dir", return_value=root):
+                with patch.object(app.shutil, "which", return_value=None):
+                    self.assertEqual(app.resolve_tool(None, "ffmpeg"), str(executable.resolve()))
 
 
 class DiscoveryTests(unittest.TestCase):
@@ -74,7 +86,7 @@ class ConversionTests(unittest.TestCase):
             source, decoded = root / "source.nwa", root / "decoded.wav"
             source.touch()
 
-            def fake_process(command):
+            def fake_process(command, *_args):
                 write_wav(decoded)
                 return app.subprocess.CompletedProcess(command, 0, "", "")
 
@@ -87,7 +99,7 @@ class ConversionTests(unittest.TestCase):
             source, decoded = root / "source.nwa", root / "decoded.wav"
             source.touch()
 
-            def fake_process(command):
+            def fake_process(command, *_args):
                 write_wav(decoded)
                 decoded.write_bytes(decoded.read_bytes()[:-20])
                 return app.subprocess.CompletedProcess(command, 0, "", "")
@@ -102,7 +114,7 @@ class ConversionTests(unittest.TestCase):
             source, output = root / "input.nwa", root / "out" / "input.mp3"
             source.touch()
 
-            def fake_process(command):
+            def fake_process(command, *_args):
                 if command[0] == "vgm":
                     write_wav(Path(command[command.index("-o") + 1]))
                 else:
@@ -121,7 +133,7 @@ class ConversionTests(unittest.TestCase):
             source, output = root / "input.nwa", root / "out" / "input.mp3"
             source.touch()
 
-            def fake_process(command):
+            def fake_process(command, *_args):
                 if command[0] == "vgm":
                     write_wav(Path(command[command.index("-o") + 1]))
                 else:
@@ -140,7 +152,7 @@ class ConversionTests(unittest.TestCase):
             output.parent.mkdir()
             output.write_bytes(b"original")
 
-            def fake_process(command):
+            def fake_process(command, *_args):
                 if command[0] == "vgm":
                     write_wav(Path(command[command.index("-o") + 1]))
                     return app.subprocess.CompletedProcess(command, 0, "", "")

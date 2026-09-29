@@ -1,6 +1,10 @@
 .AGENTS.md
 PLAN.md
-BGM00.nwa
+*.nwa
+*.mp3
 __pycache__/
 *.py[cod]
 mp3/
+.venv/
+build/
+dist/

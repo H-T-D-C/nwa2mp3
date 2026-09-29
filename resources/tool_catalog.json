@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "platform": "windows-x64",
+  "tools": {
+    "vgmstream": {
+      "display_name": "NWA音声読み取りツール",
+      "version": "r2117",
+      "homepage": "https://vgmstream.org/downloads/",
+      "download_url": "https://github.com/vgmstream/vgmstream/releases/download/r2117/vgmstream-win64.zip",
+      "sha256": "6c4a8a3813864fefed081bbd337dbc0ad93bf88e0b92f5db98d7ab258b22dc6c",
+      "max_download_bytes": 83886080,
+      "max_unpacked_bytes": 314572800,
+      "executable": "vgmstream-cli.exe",
+      "license_url": "https://github.com/vgmstream/vgmstream/blob/master/COPYING"
+    },
+    "ffmpeg": {
+      "display_name": "音声ファイル作成ツール（FFmpeg essentials）",
+      "version": "9.0.2",
+      "homepage": "https://ffmpeg.org/download.html",
+      "download_url": "https://www.gyan.dev/ffmpeg/builds/packages/ffmpeg-9.0.2-essentials_build.zip",
+      "sha256": "60f467265b1e312373dbcd92200c2618a74850f98d3d078e94296bb3fa2047ba",
+      "max_download_bytes": 136314880,
+      "max_unpacked_bytes": 805306368,
+      "executable": "bin/ffmpeg.exe",
+      "license_url": "https://www.gyan.dev/ffmpeg/builds/"
+    }
+  }
+}
